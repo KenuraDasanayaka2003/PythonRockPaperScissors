@@ -41,6 +41,7 @@ def stop_game():
 
     score_label.config(text="User: 0 | Computer: 0")
     computer_label.config(text="Computer chose: -")
+    user_label.config(text="User chose: -")
     result_label.config(text="Game Stopped. Scores Reset.")
 
 rng = random.SystemRandom()
