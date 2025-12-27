@@ -21,11 +21,19 @@ user_label.pack(pady=5)
 result_label = tk.Label(window, text="Click START to play!" , font=("Arial",12) )
 result_label.pack(pady=5)
 
+stats_label = tk.Label(window, text=" Turns : 0 | User wins : 0 | Computer wins : 0 | draws : 0", font=("Arial",12))
+stats_label.pack(pady=5)
+
 #------------------------Game Variables-----------------------------------
 choices = ['Rock', 'Paper', 'Scissors'] #Store possible choices for the computer
 user_score = 0  #initializing the user score as 0
 computer_score = 0 #initializing the computer score as 0
 game_running = False
+
+total_turns = 0
+user_win = 0
+computer_win = 0
+draws = 0
 
 #------------------------Game Logic------------------------------------------
 def start_game():
@@ -34,23 +42,30 @@ def start_game():
     result_label.config(text="Game Started! Make your move")
 
 def stop_game():
-    global game_running, user_score, computer_score
+    global game_running, user_score, computer_score, total_turns, user_win, computer_win, draws
     game_running = False
     user_score =0
     computer_score =0
+    total_turns = 0
+    user_win =0
+    computer_win =0
+    draws = 0
 
     score_label.config(text="User: 0 | Computer: 0")
     computer_label.config(text="Computer chose: -")
     user_label.config(text="User chose: -")
+    stats_label.config(text="Turns: 0 | User Wins: 0 | Computer Wins: 0 | Draws: 0")
     result_label.config(text="Game Stopped. Scores Reset.")
 
 rng = random.SystemRandom()
 def play(user_choice):
-    global user_score, computer_score
+    global user_score, computer_score, total_turns, user_win, computer_win, draws
 
     if not game_running:
         result_label.config(text="Click START to play again")
         return
+
+    total_turns += 1
 
     computer_choice = rng.choice(choices)
     computer_label.config(text=f"Computer chose : {computer_choice}")
@@ -58,19 +73,23 @@ def play(user_choice):
 
     if user_choice == computer_choice:
         result = "It is a draw"
+        draws += 1
 
     elif (
             (user_choice == "Rock" and computer_choice == "Scissors") or
             (user_choice == "Paper" and computer_choice == "Rock") or
             (user_choice == "Scissors" and computer_choice == "Paper")):
         user_score += 1
+        user_win += 1
         result = "You win!"
 
     else:
         computer_score += 1
+        computer_win += 1
         result = "Computer wins!"
 
     score_label.config(text=f"User : {user_score} | Computer : {computer_score}")
+    stats_label.config(text=f"Turns : {total_turns} | User wins : {user_win} | Computer wins: {computer_win} | Draws: {draws}")
     result_label.config(text=result)
 
 #-----------------------------Buttons--------------------------------------
