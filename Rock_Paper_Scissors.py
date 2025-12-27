@@ -61,7 +61,7 @@ def play(user_choice):
     elif (
             (user_choice == "Rock" and computer_choice == "Scissors") or
             (user_choice == "Paper" and computer_choice == "Rock") or
-            (user_choice == "Scissors" and computer_choice == "Papers")):
+            (user_choice == "Scissors" and computer_choice == "Paper")):
         user_score += 1
         result = "You win!"
 
